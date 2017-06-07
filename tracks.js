@@ -1,22 +1,21 @@
 
 var exports = module.exports = {};
 
-var Coordinate = function(lon, lat) {
+var Coordinate = function(lat, lon) {
     return {
-        lon: lon,
-        lat: lat
+        lat: lat,
+        lon: lon
     }
 }
 
 var tracks = [{
         id: 42,
         coordinates: [
-            new Coordinate(-58.6998921,-34.5204229),
-            new Coordinate(-58.7019575,-34.5223897),
-            new Coordinate(-58.7002516,-34.5236715),
-            new Coordinate(-58.7001067,-34.5236891),
-            new Coordinate(-58.6982131,-34.5218638),
-            new Coordinate(-58.6998921,-34.5204229)
+            new Coordinate(-34.524309,-58.695315),
+            new Coordinate(-34.521865, -58.698213),
+            new Coordinate(-34.520437, -58.699889),
+            new Coordinate(-34.522388, -58.701957),
+            new Coordinate(-34.523579, -58.700350)
         ]
     }
 ]

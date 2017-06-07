@@ -4,6 +4,15 @@ var router = express.Router();
 
 var help = require("./help.js");
 var tracks = require("./tracks.js");
+var runners = require("./runners.js");
+var webcams = require("./webcams.js");
+
+var version = {
+    id: '0.1.1',
+    name: 'fastspeedster',
+    lastupdate: Date.now()
+}
+
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +28,8 @@ app.use(function(req, res, next) {
 app.use('/api', router);
 // routes:
 var urlTrack = '/tracks/';
+var urlRunner = '/runners/';
+var urlWebcam = '/webcams/';
 
 // Home -> Help
 router.get('/', function(req, res) {
@@ -30,16 +41,11 @@ router.get('/', function(req, res) {
 router.route(urlTrack)
     .get(function(req, res) {
         console.log("GET: " + urlTrack);
-
         console.log("Getting tracks list...");
 
         var response = {
             tracks: tracks.list(),
-            version: {
-                id: '0.0.1',
-                name: 'meteor',
-                lastupdate: Date.now()
-            }
+            version: version
         }
         res.json(response);
     });
@@ -64,15 +70,102 @@ router.route(urlTrack + ':track_id')
 
         var response = {
             track: track,
-            version: {
-                id: '0.0.1',
-                name: 'meteor',
-                lastupdate: Date.now()
-            }
+            version: version
         }
         res.json(response);
     });
 
+// Runner
+router.route(urlRunner)
+    .get(function(req, res) {
+        console.log("GET: " + urlRunner);
+        console.log("Getting runners list...");
+
+        var response = {
+            runners: runners.list(),
+            version: version
+        }
+        res.json(response);
+    });
+
+router.route(urlRunner + ':runner_id')
+    .get(function(req, res) {
+        console.log("GET: " + urlRunner + ':runner_id');
+
+        var id = req.params.runner_id;
+        console.log(id);
+
+        var runner = runners.get(id);
+        console.log(runner);
+
+        if (!runner) {
+            // http://stackoverflow.com/questions/8393275/how-to-programmatically-send-a-404-response-with-express-node
+            res.status(404)
+               .send('Runner inexistente.');
+
+            return;
+        }
+
+        var response = {
+            runner: runner,
+            version: version
+        }
+        res.json(response);
+    });
+
+//
+router.route(urlWebcam + ':track_id')
+    .get(function(req, res) {
+        console.log("GET: " + urlWebcam + ':track_id');
+
+        var trackId = req.params.track_id;
+        console.log(trackId);
+
+        var webcamByTrack = webcams.list(trackId);
+        console.log(webcamByTrack);
+
+        if (!webcamByTrack) {
+            // http://stackoverflow.com/questions/8393275/how-to-programmatically-send-a-404-response-with-express-node
+            res.status(404)
+               .send('Cámaras inexistentes.');
+
+            return;
+        }
+
+        var response = {
+            track_id: webcamByTrack.trackId,
+            webcams: webcamByTrack.webcams,
+            version: version
+        }
+        res.json(response);
+    });
+
+router.route(urlWebcam + ':track_id' + "/" + ":webcam_id")
+    .get(function(req, res) {
+        console.log("GET: " + urlWebcam + ':track_id' + "/" + ":webcam_id");
+
+        var trackId = req.params.track_id;
+        var webcamId = req.params.webcam_id;
+        console.log(trackId);
+        console.log(webcamId);
+
+        var webcam = webcams.get(trackId, webcamId);
+        console.log(webcam);
+
+        if (!webcam) {
+            // http://stackoverflow.com/questions/8393275/how-to-programmatically-send-a-404-response-with-express-node
+            res.status(404)
+               .send('Runner inexistente.');
+
+            return;
+        }
+
+        var response = {
+            webcam: webcam,
+            version: version
+        }
+        res.json(response);
+    });
 
 // Server up!
 var port = process.env.PORT || 3000;
