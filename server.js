@@ -26,10 +26,6 @@ app.use(function(req, res, next) {
 
 // routes will be /api/whatever
 app.use('/api', router);
-// routes:
-var urlTrack = '/tracks/';
-var urlRunner = '/runners/';
-var urlWebcam = '/webcams/';
 
 // Home -> Help
 router.get('/', function(req, res) {
@@ -38,6 +34,7 @@ router.get('/', function(req, res) {
 });
 
 // Tracks
+var urlTrack = '/tracks/';
 router.route(urlTrack)
     .get(function(req, res) {
         console.log("GET: " + urlTrack);
@@ -76,6 +73,7 @@ router.route(urlTrack + ':track_id')
     });
 
 // Runner
+var urlRunner = '/runners/';
 router.route(urlRunner)
     .get(function(req, res) {
         console.log("GET: " + urlRunner);
@@ -114,6 +112,7 @@ router.route(urlRunner + ':runner_id')
     });
 
 //
+var urlWebcam = '/webcams/';
 router.route(urlWebcam + ':track_id')
     .get(function(req, res) {
         console.log("GET: " + urlWebcam + ':track_id');

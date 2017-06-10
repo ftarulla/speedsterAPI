@@ -109,15 +109,6 @@ var Quicksilver = signupWithSponsor(Pietro, "MarvDC");
 var LibertyBelle = signupFree(Jesse);
 var Whizzer = signupWithSponsor(Robert, "DCMarv");
 
-Flash.positions = [
-    {lat: -34.522739, lon: -58.702329},
-    {lat: -34.522992, lon: -58.702572},
-    {lat: -34.523191, lon: -58.702801},
-    {lat: -34.523412, lon: -58.703056},
-    {lat: -34.523643, lon: -58.703299}
-]
-
-
 /******************************************************************************
  * API
  */
