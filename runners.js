@@ -28,7 +28,6 @@ var Sponsor = function(id, name) {
  * Runners
  */
 var runners = [];
-var signins = {};
 
 /******************************************************************************
  * Sponsors
@@ -90,8 +89,6 @@ var signup = function(applicant, sponsorGenerator) {
     var runner = new Runner(id, applicant.name, applicant.surname, sponsor);
 
     runners.push(runner);
-    signins[id] = sponsor.id;
-
     return runner;
 }
 

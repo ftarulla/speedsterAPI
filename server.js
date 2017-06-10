@@ -5,6 +5,7 @@ var router = express.Router();
 var help = require("./help.js");
 var tracks = require("./tracks.js");
 var runners = require("./runners.js");
+var positions = require("./positions.js");
 var webcams = require("./webcams.js");
 
 var version = {
@@ -12,7 +13,6 @@ var version = {
     name: 'fastspeedster',
     lastupdate: Date.now()
 }
-
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -161,6 +161,45 @@ router.route(urlWebcam + ':track_id' + "/" + ":webcam_id")
 
         var response = {
             webcam: webcam,
+            version: version
+        }
+        res.json(response);
+    });
+
+// Positions
+var urlPositions = '/positions/';
+router.route(urlPositions)
+    .get(function(req, res) {
+        console.log("GET: " + urlPositions);
+        console.log("Getting positions list...");
+
+        var response = {
+            positions: positions.list(),
+            version: version
+        }
+        res.json(response);
+    });
+
+router.route(urlPositions + ':runner_id')
+    .get(function(req, res) {
+        console.log("GET: " + urlPositions + ':runner_id');
+
+        var id = req.params.runner_id;
+        console.log(id);
+
+        var position = positions.get(id);
+        console.log(position);
+
+        if (!position) {
+            // http://stackoverflow.com/questions/8393275/how-to-programmatically-send-a-404-response-with-express-node
+            res.status(404)
+               .send('Positions inexistente.');
+
+            return;
+        }
+
+        var response = {
+            position: position,
             version: version
         }
         res.json(response);

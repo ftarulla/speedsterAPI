@@ -1,17 +1,30 @@
 
 var runnerService = require("./runners.js");
 
-var positions = {};
+var positions = [];
+//var positions = {};
 
 var runners = runnerService.list();
 
-positions[runners[0].id] = [
-    {lat: -34.522739, lon: -58.702329},
-    {lat: -34.522992, lon: -58.702572},
-    {lat: -34.523191, lon: -58.702801},
-    {lat: -34.523412, lon: -58.703056},
-    {lat: -34.523643, lon: -58.703299}
-]
+var position0 = {
+    runner: runners[0].id,
+    positions: [
+        {lat: -34.522739, lon: -58.702329},
+        {lat: -34.522992, lon: -58.702572},
+        {lat: -34.523191, lon: -58.702801},
+        {lat: -34.523412, lon: -58.703056},
+        {lat: -34.523643, lon: -58.703299}
+    ]
+}
+positions.push(position0);
+
+// positions[runners[0].id] = [
+//     {lat: -34.522739, lon: -58.702329},
+//     {lat: -34.522992, lon: -58.702572},
+//     {lat: -34.523191, lon: -58.702801},
+//     {lat: -34.523412, lon: -58.703056},
+//     {lat: -34.523643, lon: -58.703299}
+// ];
 
 
 /******************************************************************************
@@ -22,6 +35,6 @@ exports.list = function() {
 }
 
 exports.get = function(runnerId) {
-    //return positions.filter(position => position.id == id)[0];
-    return positions[runnerId];
+    return positions.filter(position => position.runner == runnerId)[0];
+    //return positions[runnerId];
 }
