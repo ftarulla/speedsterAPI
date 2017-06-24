@@ -7,6 +7,7 @@ var tracks = require("./tracks.js");
 var runners = require("./runners.js");
 var positions = require("./positions.js");
 var webcams = require("./webcams.js");
+var waterstops = require("./waterstops.js");
 
 var version = {
     id: '0.1.1',
@@ -200,6 +201,45 @@ router.route(urlPositions + ':runner_id')
 
         var response = {
             position: position,
+            version: version
+        }
+        res.json(response);
+    });
+
+// Runner
+var urlWaterStop = '/waterstops/';
+router.route(urlWaterStop)
+    .get(function(req, res) {
+        console.log("GET: " + urlWaterStop);
+        console.log("Getting waterstops list...");
+
+        var response = {
+            waterstops: waterstops.list(),
+            version: version
+        }
+        res.json(response);
+    });
+
+router.route(urlWaterStop + ':waterstop_id')
+    .get(function(req, res) {
+        console.log("GET: " + urlWaterStop + ':waterstop_id');
+
+        var id = req.params.waterstop_id;
+        console.log(id);
+
+        var waterstop = waterstops.get(id);
+        console.log(waterstop);
+
+        if (!waterstop) {
+            // http://stackoverflow.com/questions/8393275/how-to-programmatically-send-a-404-response-with-express-node
+            res.status(404)
+               .send('WaterStop inexistente.');
+
+            return;
+        }
+
+        var response = {
+            waterstop: waterstop,
             version: version
         }
         res.json(response);

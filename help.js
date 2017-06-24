@@ -38,6 +38,14 @@ var help = {
                 "descripción": "Obtiene las posiciones del corredor con id :runner_id",
                 "ejemplo": "/api/positions/780"
             },
+            '/api/waterstops/': {
+                "descripción": "Lista los water stops de la carrera.",
+                "ejemplo": "/api/waterstops/"
+            },
+            '/api/waterstops/:waterstop_id': {
+                "descripción": "Obtiene el water stop con id :waterstop_id",
+                "ejemplo": "/api/waterstops/81"
+            },
         }
     }
 }
